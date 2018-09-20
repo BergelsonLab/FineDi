@@ -59,13 +59,13 @@ __NB: you need to have a GitHub account!__
 
 - Once the environment is set up, open `Terminal`
 
-- Write `cd ` then drag and drop the FineDi folder in the terminal (the command should look like `$ cd /Users/gb146/Desktop/FineDi`)
+- Write `cd ` (don't forget the space after cd) then drag and drop the FineDi folder into the terminal app which will paste its address there, e.g. `$ cd /Users/gb146/Desktop/FineDi` [yours will have your username]
 
 - Check that you are at the right place by writing the following command in the terminal:
 
   `$ ls`
 
-You should then see the name `launch_app.sh` appear in the list
+If you are in the right place, you'll see `launch_app.sh` appear in the list
 
 - Launch the app from the Terminal
 
