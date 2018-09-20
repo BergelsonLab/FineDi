@@ -103,7 +103,7 @@ You should then see the name `launch_app.sh` appear in the list
 
   - In the terminal, press _ctrl+C_ to quit the app
 
-- __Save your progress on the git repository - this MUST be done before you leave__
+- __!!! Save your progress on the git repository - this MUST be done before you leave !!!__
 
   - In the terminal, write the commands:
 
