@@ -4,6 +4,8 @@
 
 ### 1. Set git
 
+__NB: you need to have a GitHub account!__
+
 - Open Terminal and clone the repository
 
   `git clone git@github.com:aclew/FineDi.git ~/Desktop/FineDi`
@@ -16,7 +18,7 @@
 
   `git branch -a`
 
-  - If the output has `master` in green (or anything other than `whole_vs_500` in green), change branch using
+  - If the output has `*master` in green (or anything other than `whole_vs_500` in green), change branch using
 
     `git checkout whole_vs_500`
     
@@ -42,6 +44,10 @@
   `git pull`
 
   - If there is a merging issue... should not happen...but go bug Gladys if it does:)
+  
+## Check volume
+
+- Listen to one of the clips in _media->cutdir->full_ and adjust the volume. Please do not change the volume during the task.
   
 ## Running the app
 
@@ -95,7 +101,7 @@ You should then see the name `launch_app.sh` appear in the list
 
   - In the terminal, press _ctrl+C_ to quit the app
 
-- Save your progress on the git repository:
+- __Save your progress on the git repository - this MUST be done before you leave__
 
   - In the terminal, write the commands:
 
@@ -108,4 +114,4 @@ You should then see the name `launch_app.sh` appear in the list
     `git push`
 
 
-You did your part, thank you!
+## You did your part, thank you!
