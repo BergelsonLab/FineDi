@@ -47,13 +47,13 @@ __NB: you need to have a GitHub account!__
 
   - If there is a merging issue... should not happen...but go bug Gladys if it does:)
   
-## 1.3. Check volume
+## 2. Check volume
 
 - Listen to one of the clips in _media->cutdir->full_ and adjust the volume. Please do not change the volume during the task.
   
-## 2. Running the app
+## 3. Running the app
 
-### 2.1. Launching the app
+### 3.1. Launching the app
 
 - Once the environment is set up, open `Terminal`
 
@@ -75,13 +75,13 @@ You should then see the name `launch_app.sh` appear in the list
 
   - Enter the address `localhost:5000` in the address bar, enter
 
-### 2.2. Options to choose
+### 3.2. Options to choose
 
 - Choose __Start session__
 
 - Click on the task that you want to do (__500, first pass, second pass__)
 
-### 2.3. Steps to follow
+### 3.3. Steps to follow
 
 - For __500__ or __second pass__
 
@@ -95,7 +95,7 @@ You should then see the name `launch_app.sh` appear in the list
 
   - Say whether you hear a child or not by clicking __Exclude__ or __Keep__, then click __Submit query__; this will automatically go to the next wav
 
-## 3. Finishing a session
+## 4. Finishing a session
 
 - A progress bar indicates the proportion of files that you heard and the proportion that is left to hear. You will hear a maximum of 100 clips by session. Once the progress bar is full, a success page appears: your task is complete!
 
