@@ -31,13 +31,13 @@ __NB: you need to have a GitHub account!__
 
 ### 1.1.2. Put dataset at the right place
 
-- Go to _FineDi -> fineDi -> static_
+- On your desktop, go to _FineDi -> fineDi -> static_
 
-  - Check that the files _info_dict.txt_ and _summary.txt_ exist (if not, don't go any further)
+  - Check that the files _info_dict.txt_ and _summary.txt_ exist (if not, don't go any further, and ask Gladys)
 
   - In _FineDi -> fineDi -> static_, create a folder named _media_
 
-  - Copy the folder(from PN-Opus) _Seedlings -> classif_comparison -> cut_dir_ in _media_ (it may take up to 5 minutes)
+  - Login to PN-Opus and Copy the folder _Seedlings -> classif_comparison -> cut_dir_ into the  _media_ folder you just created in the static_ folder (it may take up to 5 minutes)
 
 ## 1.2. Retrieving changes (if not first time)
 
