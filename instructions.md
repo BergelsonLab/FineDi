@@ -1,5 +1,7 @@
 # Instructions
 
+Note: the symbol "$" will be at the beginning of each terminal command. It is used to signify the prompt, so simply enter the command that follows the dollar sign.
+
 ## 1. Setting up the environment
 
 ## 1.1. Setting up the environment for the first time
@@ -10,21 +12,21 @@ __NB: you need to have a GitHub account!__
 
 - Open Terminal and clone the repository
 
-  `git clone git@github.com:aclew/FineDi.git ~/Desktop/FineDi`
+  `$ git clone git@github.com:aclew/FineDi.git ~/Desktop/FineDi`
 
 - Go into this directory
 
-  `cd ~/Desktop/FineDi/`
+  `$ cd ~/Desktop/FineDi/`
 
 - Check that you are on the right branch
 
-  `git branch -a`
+  `$ git branch -a`
 
   - If the output has `*master` in green (or anything other than `whole_vs_500` in green), change branch using
 
-    `git checkout whole_vs_500`
+    `$ git checkout whole_vs_500`
     
-  - Repeat instruction `git branch -a` to check that `* whole_vs_500` is now in green in the top row
+  - Repeat instruction `$ git branch -a` to check that `* whole_vs_500` is now in green in the top row
 
 
 ### 1.1.2. Put dataset at the right place
@@ -41,9 +43,9 @@ __NB: you need to have a GitHub account!__
 
 - Open Terminal and get the latest modifications to the files _info_dict.txt_ and _summary.txt_
 
-  `cd ~/Desktop/Finedi`
+  `$ cd ~/Desktop/Finedi`
 
-  `git pull`
+  `$ git pull`
 
   - If there is a merging issue... should not happen...but go bug Gladys if it does:)
   
@@ -57,17 +59,17 @@ __NB: you need to have a GitHub account!__
 
 - Once the environment is set up, open `Terminal`
 
-- Write `cd ` then drag and drop the FineDi folder in the terminal (the command should look like `cd /Users/gb146/Desktop/FineDi`)
+- Write `cd ` then drag and drop the FineDi folder in the terminal (the command should look like `$ cd /Users/gb146/Desktop/FineDi`)
 
 - Check that you are at the right place by writing the following command in the terminal:
 
-  `ls`
+  `$ ls`
 
 You should then see the name `launch_app.sh` appear in the list
 
 - Launch the app from the Terminal
 
-  `sh launch_app.sh`
+  `$ sh launch_app.sh`
 
 - Open the corresponding address in Firefox
 
@@ -107,13 +109,13 @@ You should then see the name `launch_app.sh` appear in the list
 
   - In the terminal, write the commands:
 
-    `git add findeDi/static/summary.txt`
+    `$ git add findeDi/static/summary.txt`
 
-    `git add findeDi/static/info_dict.txt`
+    `$ git add findeDi/static/info_dict.txt`
 
-    `git commit -m "processed [n] files for task [i]"` (with n the number of files that you listened to and i the name of the task)
+    `$ git commit -m "processed [n] files for task [i]"` (with n the number of files that you listened to and i the name of the task). For example, if you have done 2 series of 100 segments for the 'whole, first pass' task, your commit command will be `$ git commit -m "processed 200 files for task whole, first pass"`
 
-    `git push`
+    `$ git push`
 
 
 ## You did your part, thank you!
