@@ -1,6 +1,6 @@
 # Instructions
 
-Note: the symbol "$" will be at the beginning of each terminal command. It is used to signify the prompt, so simply enter the command that follows the dollar sign.
+Note: the symbol `$` will be at the beginning of each terminal command. It is used to signify the prompt, so simply enter the command that follows the dollar sign.
 
 ## 1. Setting up the environment
 
