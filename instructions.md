@@ -1,8 +1,10 @@
 # Instructions
 
-## Setting up the environment for the first time
+## 1. Setting up the environment
 
-### 1. Set git
+## 1.1. Setting up the environment for the first time
+
+### 1.1.1. Set git
 
 __NB: you need to have a GitHub account!__
 
@@ -25,7 +27,7 @@ __NB: you need to have a GitHub account!__
   - Repeat instruction `git branch -a` to check that `* whole_vs_500` is now in green in the top row
 
 
-### 2. Put dataset at the right place
+### 1.1.2. Put dataset at the right place
 
 - Go to _FineDi -> fineDi -> static_
 
@@ -35,7 +37,7 @@ __NB: you need to have a GitHub account!__
 
   - Copy the folder(from PN-Opus) _Seedlings -> classif_comparison -> cut_dir_ in _media_ (it may take up to 5 minutes)
 
-## Retrieving changes (if not first time)
+## 1.2. Retrieving changes (if not first time)
 
 - Open Terminal and get the latest modifications to the files _info_dict.txt_ and _summary.txt_
 
@@ -45,13 +47,13 @@ __NB: you need to have a GitHub account!__
 
   - If there is a merging issue... should not happen...but go bug Gladys if it does:)
   
-## Check volume
+## 1.3. Check volume
 
 - Listen to one of the clips in _media->cutdir->full_ and adjust the volume. Please do not change the volume during the task.
   
-## Running the app
+## 2. Running the app
 
-### 1. Launching the app
+### 2.1. Launching the app
 
 - Once the environment is set up, open `Terminal`
 
@@ -73,13 +75,13 @@ You should then see the name `launch_app.sh` appear in the list
 
   - Enter the address `localhost:5000` in the address bar, enter
 
-### 2. Options to choose
+### 2.2. Options to choose
 
 - Choose __Start session__
 
 - Click on the task that you want to do (__500, first pass, second pass__)
 
-### 3. Steps to follow
+### 2.3. Steps to follow
 
 - For __500__ or __second pass__
 
@@ -93,7 +95,7 @@ You should then see the name `launch_app.sh` appear in the list
 
   - Say whether you hear a child or not by clicking __Exclude__ or __Keep__, then click __Submit query__; this will automatically go to the next wav
 
-## Finishing a session
+## 3. Finishing a session
 
 - A progress bar indicates the proportion of files that you heard and the proportion that is left to hear. You will hear a maximum of 100 clips by session. Once the progress bar is full, a success page appears: your task is complete!
 
