@@ -12,7 +12,7 @@ __NB: you need to have a GitHub account!__
 
 - Open Terminal and clone the repository
 
-  `$ git clone git@github.com:aclew/FineDi.git ~/Desktop/FineDi`
+  `$ git clone git@github.com:BergelsonLab/FineDi.git ~/Desktop/FineDi`
 
 - Go into this directory
 
