@@ -61,7 +61,7 @@ __NB: you need to have a GitHub account!__
 
 - Once the environment is set up, open `Terminal`
 
-- Write `cd ` (don't forget the space after cd) then drag and drop the FineDi folder into the terminal app which will paste its address there, e.g. `$ cd /Users/gb146/Desktop/FineDi` [yours will have your username]
+- Write `cd ` (don't forget the space after cd) then drag and drop the FineDi folder into the terminal app which will paste its address there, e.g. `$ cd /Users/bergelsonlab/Desktop/FineDi`
 
 - Check that you are at the right place by writing the following command in the terminal:
 
