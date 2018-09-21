@@ -107,7 +107,12 @@ If you are in the right place, you'll see `launch_app.sh` appear in the list
 
 - __!!! Save your progress on the git repository - this MUST be done before you leave !!!__
 
-  - In the terminal, write the commands:
+  - In the terminal, write the following commands:
+    (if your username is janedoe and the email address you use for your github account is janedoe@gmail.com)
+    
+    `$ git config user.name janedoe`
+    
+    `$ git config user.email janedoe@duke.edu`
 
     `$ git add fineDi/static/summary.txt`
 
