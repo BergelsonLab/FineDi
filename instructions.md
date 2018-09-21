@@ -109,9 +109,9 @@ If you are in the right place, you'll see `launch_app.sh` appear in the list
 
   - In the terminal, write the commands:
 
-    `$ git add findeDi/static/summary.txt`
+    `$ git add fineDi/static/summary.txt`
 
-    `$ git add findeDi/static/info_dict.txt`
+    `$ git add fineDi/static/info_dict.txt`
 
     `$ git commit --author="username <email>" -m "processed [n] files for task [i]"` (with n the number of files that you listened to and i the name of the task). For example, if you have done 2 series of 100 segments for the 'whole, first pass' task, your username is janedoe and the email address you use for your github account is janedoe@gmail.com, your commit command will be `$ git commit --author="janedoe <janedoe@gmail.com" -m "processed 200 files for task whole, first pass"`
 
