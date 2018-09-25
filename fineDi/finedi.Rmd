@@ -7,9 +7,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Importing libraries
 
-```{r lib}
+```{r lib, echo=FALSE}
 library(tidyverse)
 ```
 
@@ -17,15 +16,31 @@ library(tidyverse)
 data_is_child <- read_csv("/Users/gb146/FineDi-Bergelson/fineDi/static/is_child.csv")
 eng <- data_is_child %>% filter(lang=='english')
 tsi <- data_is_child %>% filter(lang=='tsimane')
+
+mean(data_is_child$length)
+
+```
+
+## Number of times each clip was seen
+
+Process repeated on 1800 clips, 900 in English and 900 in Tsimane. As the experiment is not over, not all clips have been scored the same number of times:
+
+```{r seen}
+seen <- matrix(c(0,1,2,3, 237, 450, 488, 625), ncol=4, byrow = TRUE)
+colnames(seen) <- c("","","", "")
+rownames(seen) <- c("N", "Number of clips scored by N persons")
+seen
 ```
 
 ## Histogram of segment length by language
 
+The clips were chosen among CHN segments longer than 500ms.
 
 ```{r length_by_language}
 ggplot(data=data_is_child, aes(data_is_child$length)) +
   geom_histogram(binwidth=0.1) + # binwidth to change
-  xlim(0,10) +
+  xlim(0,8) +
+  xlab("CHN segment length in seconds")
   facet_wrap(~ lang)
 ```
 
@@ -33,7 +48,7 @@ ggplot(data=data_is_child, aes(data_is_child$length)) +
 
 ### Overall
 
-```{r agreement}
+```{r agreement, echo=FALSE}
 total_seg <- nrow(data_is_child)
 agreeing_yes <- nrow(data_is_child %>% filter(is_not_child==0.0 & is_child!=0.0))
 has_yes <- nrow(data_is_child %>% filter(is_child!=0.0))
@@ -51,6 +66,10 @@ yes_agreement <- agreeing_yes / has_yes
 ## no consensus / considered as no
 no_agreement <- agreeing_no / has_no
 
+```
+
+```{r by_language_eng, echo=FALSE}
+
 ## by language
 eng_agreeing_yes <- nrow(eng %>% filter(is_not_child==0.0 & is_child!=0.0))
 eng_has_yes <- nrow(eng %>% filter(is_child!=0.0))
@@ -58,15 +77,32 @@ eng_agreeing_no <- nrow(eng %>% filter(is_child==0.0 & is_not_child!=0.0))
 eng_has_no <- nrow(eng %>% filter(is_not_child!=0.0))
 eng_agreement <- (eng_agreeing_no+eng_agreeing_yes)/nrow(eng)
 
+```
+
+```{r by_language_tsi, echo=FALSE}
+
 tsi_agreeing_yes <- nrow(tsi %>% filter(is_not_child==0.0 & is_child!=0.0))
 tsi_has_yes <- nrow(tsi %>% filter(is_child!=0.0))
 tsi_agreeing_no <- nrow(tsi %>% filter(is_child==0.0 & is_not_child!=0.0))
 tsi_has_no <- nrow(tsi %>% filter(is_not_child!=0.0))
 tsi_agreement <- (tsi_agreeing_no+tsi_agreeing_yes)/nrow(tsi)
+```
 
-res <- matrix(c(overall_agreement, yes_agreement, no_agreement, eng_agreement, eng_agreeing_yes/eng_has_yes, eng_agreeing_no/eng_has_no, tsi_agreement, tsi_agreeing_yes/tsi_has_yes, tsi_agreeing_no/tsi_has_no),ncol=3,byrow=TRUE)
-colnames(res) <- c("Agreement", "Yes-agreement", "No-agreement")
+This is computed over all segments that have been seen at least once.
+The #yes-agreement is the number of times a segment was labeled as key child as least once and never as not key child (reverse for #no-agreement). #agreement is the sum of the two.
+%yes-agreement is #yes-agreement divided by the number of segments labeled as key child by at least one person (reverse for %no-agreement). %agreement is #yes-agreement+#no-agreement divided by the total number of segments.
+
+
+```{r agreement_res, echo=FALSE}
+res <- matrix(c(overall_agreement, agreeing_no+agreeing_yes, yes_agreement, agreeing_yes, no_agreement, agreeing_no, eng_agreement, eng_agreeing_no+eng_agreeing_yes, eng_agreeing_yes/eng_has_yes, eng_agreeing_yes, eng_agreeing_no/eng_has_no, eng_agreeing_no, tsi_agreement, tsi_agreeing_no+tsi_agreeing_yes, tsi_agreeing_yes/tsi_has_yes, tsi_agreeing_yes,  tsi_agreeing_no/tsi_has_no, tsi_agreeing_no),ncol=6,byrow=TRUE)
+
+colnames(res) <- c(" %Agreement", " #Agreement", " %Yes-agreement", " #Yes-agreement", " %No-agreement", " #No-agreement")
 rownames(res) <- c("Overall", "English", "Tsimane")
+res[," %Agreement"] <- res[," %Agreement"] * 100
+res[," %Yes-agreement"] <- res[," %Yes-agreement"] * 100
+res[," %No-agreement"] <- res[," %No-agreement"] * 100
+
+res <- round(res)
 
 res <- as.table(res)
 res
@@ -74,35 +110,98 @@ res
 ```
 
 
+```{r agreement_>1, echo=FALSE}
+
+data_is_child <- data_is_child %>% filter(is_child+is_not_child > 1)
+total_seg <- nrow(data_is_child)
+agreeing_yes <- nrow(data_is_child %>% filter(is_not_child==0.0 & is_child!=0.0))
+has_yes <- nrow(data_is_child %>% filter(is_child!=0.0))
+is_yes <- nrow(data_is_child %>% filter(is_child>is_not_child))
+agreeing_no <- nrow(data_is_child %>% filter(is_child==0.0 & is_not_child!=0.0))
+has_no <- nrow(data_is_child %>% filter(is_not_child!=0.0))
+is_no <- nrow(data_is_child %>% filter(is_not_child>is_child))
+
+## All segments on which there is a concensus
+overall_agreement <- (agreeing_no+agreeing_yes)/total_seg
+
+## yes consensus / considered as yes
+yes_agreement <- agreeing_yes / has_yes
+
+## no consensus / considered as no
+no_agreement <- agreeing_no / has_no
+
+eng <- eng %>% filter(is_child+is_not_child > 1)
+eng_agreeing_yes <- nrow(eng %>% filter(is_not_child==0.0 & is_child!=0.0))
+eng_has_yes <- nrow(eng %>% filter(is_child!=0.0))
+eng_agreeing_no <- nrow(eng %>% filter(is_child==0.0 & is_not_child!=0.0))
+eng_has_no <- nrow(eng %>% filter(is_not_child!=0.0))
+eng_agreement <- (eng_agreeing_no+eng_agreeing_yes)/nrow(eng)
+
+tsi <- tsi %>% filter(is_child+is_not_child > 1)
+tsi_agreeing_yes <- nrow(tsi %>% filter(is_not_child==0.0 & is_child!=0.0))
+tsi_has_yes <- nrow(tsi %>% filter(is_child!=0.0))
+tsi_agreeing_no <- nrow(tsi %>% filter(is_child==0.0 & is_not_child!=0.0))
+tsi_has_no <- nrow(tsi %>% filter(is_not_child!=0.0))
+tsi_agreement <- (tsi_agreeing_no+tsi_agreeing_yes)/nrow(tsi)
+
+res <- matrix(c(overall_agreement, agreeing_no+agreeing_yes, yes_agreement, agreeing_yes, no_agreement, agreeing_no, eng_agreement, eng_agreeing_no+eng_agreeing_yes, eng_agreeing_yes/eng_has_yes, eng_agreeing_yes, eng_agreeing_no/eng_has_no, eng_agreeing_no, tsi_agreement, tsi_agreeing_no+tsi_agreeing_yes, tsi_agreeing_yes/tsi_has_yes, tsi_agreeing_yes,  tsi_agreeing_no/tsi_has_no, tsi_agreeing_no),ncol=6,byrow=TRUE)
+
+colnames(res) <- c(" %Agreement", " #Agreement", " %Yes-agreement", " #Yes-agreement", " %No-agreement", " #No-agreement")
+rownames(res) <- c("Overall", "English", "Tsimane")
+res[," %Agreement"] <- res[," %Agreement"] * 100
+res[," %Yes-agreement"] <- res[," %Yes-agreement"] * 100
+res[," %No-agreement"] <- res[," %No-agreement"] * 100
+
+res <- round(res)
+
+res <- as.table(res)
+res
+
+```
+
 ## Length/agreement
 
 ```{r length_by_agreement}
 agreeing_data <- data_is_child %>% 
   filter(is_child==0.0 | is_not_child==0.0)
 ggplot(data=agreeing_data, aes(agreeing_data$length)) +
-  geom_histogram(binwidth=0.2) + # binwidth to change
+  geom_histogram(binwidth=0.1) + # binwidth to change
+  xlab("Length of utterance (in seconds)") +
+  ggtitle("CHN length in seconds for clips on which all scoring agree on 'key child'") +
+  xlim(0,5) +
   facet_wrap(~ lang)
 
 non_agreeing_data <- data_is_child %>% 
   filter(is_child!=0.0 & is_not_child!=0.0)
 ggplot(data=non_agreeing_data, aes(non_agreeing_data$length)) +
-  geom_histogram(binwidth=0.2) + # binwidth to change
+  geom_histogram(binwidth=0.1) + # binwidth to change
+  xlab("Length of utterance (in seconds)") +
+  ggtitle("CHN length in seconds for clips on which all scoring agree on 'not key child'") +
   facet_wrap(~ lang)
 
 ```
 
 ## Length/is_child
 
+A segment is finally labeled as key child is the number of key child labels is superior to the number of not key child labels.
+
+
 ```{r length_by_is_child}
 yes_data <- data_is_child %>% 
   filter(is_child>is_not_child)
 ggplot(data=yes_data, aes(yes_data$length)) +
-  geom_histogram(binwidth=0.2) + # binwidth to change
+  geom_histogram(binwidth=0.1) + # binwidth to change
+  xlab("Length of utterance (in seconds)") +
+  ggtitle("Length of CHN clips finally labeled as 'key child'") +
   facet_wrap(~ lang)
 
 no_data <- data_is_child %>% 
   filter(is_not_child>is_child)
 ggplot(data=no_data, aes(no_data$length)) +
-  geom_histogram(binwidth=0.2) + # binwidth to change
+  geom_histogram(binwidth=0.1) + # binwidth to change
+  xlab("Length of utterance (in seconds)") +
+  ggtitle("Length of CHN clips finally labeled as 'not key child'") +
   facet_wrap(~ lang)
 ```
+
+There seem to be no difference in length distribution between the different conditions.
