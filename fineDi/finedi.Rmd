@@ -40,7 +40,7 @@ The clips were chosen among CHN segments longer than 500ms.
 ggplot(data=data_is_child, aes(data_is_child$length)) +
   geom_histogram(binwidth=0.1) + # binwidth to change
   xlim(0,8) +
-  xlab("CHN segment length in seconds")
+  xlab("CHN segment length in seconds")+
   facet_wrap(~ lang)
 ```
 
@@ -49,6 +49,7 @@ ggplot(data=data_is_child, aes(data_is_child$length)) +
 ### Overall
 
 ```{r agreement, echo=FALSE}
+data_is_child <- data_is_child %>% filter(is_child+is_not_child>0)
 total_seg <- nrow(data_is_child)
 agreeing_yes <- nrow(data_is_child %>% filter(is_not_child==0.0 & is_child!=0.0))
 has_yes <- nrow(data_is_child %>% filter(is_child!=0.0))
