@@ -33,38 +33,50 @@ ggplot(data=data_is_child, aes(data_is_child$length)) +
 
 ### Overall
 
-Nb of segments with all 3 agreeing out of all segments
 ```{r agreement}
 total_seg <- nrow(data_is_child)
 agreeing_yes <- nrow(data_is_child %>% filter(is_not_child==0.0 & is_child!=0.0))
+has_yes <- nrow(data_is_child %>% filter(is_child!=0.0))
 is_yes <- nrow(data_is_child %>% filter(is_child>is_not_child))
 agreeing_no <- nrow(data_is_child %>% filter(is_child==0.0 & is_not_child!=0.0))
+has_no <- nrow(data_is_child %>% filter(is_not_child!=0.0))
 is_no <- nrow(data_is_child %>% filter(is_not_child>is_child))
 
 ## All segments on which there is a concensus
 overall_agreement <- (agreeing_no+agreeing_yes)/total_seg
 
 ## yes consensus / considered as yes
-yes_agreement <- agreeing_yes / is_yes
+yes_agreement <- agreeing_yes / has_yes
 
 ## no consensus / considered as no
-no_agreement <- agreeing_no / is_no
+no_agreement <- agreeing_no / has_no
 
 ## by language
 eng_agreeing_yes <- nrow(eng %>% filter(is_not_child==0.0 & is_child!=0.0))
+eng_has_yes <- nrow(eng %>% filter(is_child!=0.0))
 eng_agreeing_no <- nrow(eng %>% filter(is_child==0.0 & is_not_child!=0.0))
+eng_has_no <- nrow(eng %>% filter(is_not_child!=0.0))
 eng_agreement <- (eng_agreeing_no+eng_agreeing_yes)/nrow(eng)
 
 tsi_agreeing_yes <- nrow(tsi %>% filter(is_not_child==0.0 & is_child!=0.0))
+tsi_has_yes <- nrow(tsi %>% filter(is_child!=0.0))
 tsi_agreeing_no <- nrow(tsi %>% filter(is_child==0.0 & is_not_child!=0.0))
+tsi_has_no <- nrow(tsi %>% filter(is_not_child!=0.0))
 tsi_agreement <- (tsi_agreeing_no+tsi_agreeing_yes)/nrow(tsi)
+
+res <- matrix(c(overall_agreement, yes_agreement, no_agreement, eng_agreement, eng_agreeing_yes/eng_has_yes, eng_agreeing_no/eng_has_no, tsi_agreement, tsi_agreeing_yes/tsi_has_yes, tsi_agreeing_no/tsi_has_no),ncol=3,byrow=TRUE)
+colnames(res) <- c("Agreement", "Yes-agreement", "No-agreement")
+rownames(res) <- c("Overall", "English", "Tsimane")
+
+res <- as.table(res)
+res
 
 ```
 
 
 ## Length/agreement
 
-```{r length_by_language}
+```{r length_by_agreement}
 agreeing_data <- data_is_child %>% 
   filter(is_child==0.0 | is_not_child==0.0)
 ggplot(data=agreeing_data, aes(agreeing_data$length)) +
