@@ -72,6 +72,7 @@ no_agreement <- agreeing_no / has_no
 ```{r by_language_eng, echo=FALSE}
 
 ## by language
+eng <- eng %>% filter(is_child+ is_not_child >0)
 eng_agreeing_yes <- nrow(eng %>% filter(is_not_child==0.0 & is_child!=0.0))
 eng_has_yes <- nrow(eng %>% filter(is_child!=0.0))
 eng_agreeing_no <- nrow(eng %>% filter(is_child==0.0 & is_not_child!=0.0))
@@ -81,7 +82,7 @@ eng_agreement <- (eng_agreeing_no+eng_agreeing_yes)/nrow(eng)
 ```
 
 ```{r by_language_tsi, echo=FALSE}
-
+tsi <- tsi %>% filter(is_child+ is_not_child >0)
 tsi_agreeing_yes <- nrow(tsi %>% filter(is_not_child==0.0 & is_child!=0.0))
 tsi_has_yes <- nrow(tsi %>% filter(is_child!=0.0))
 tsi_agreeing_no <- nrow(tsi %>% filter(is_child==0.0 & is_not_child!=0.0))
