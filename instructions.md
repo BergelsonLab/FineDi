@@ -58,6 +58,10 @@ __NB: you need to have a GitHub account!__
   
 ## 3. Running the app
 
+### 3.0 Right file at right place
+
+- Move the file corresponding to the segments you have already heard (list_a, b or c) from fineDi to fineDi/static
+
 ### 3.1. Launching the app
 
 - Once the environment is set up, open `Terminal`
@@ -107,6 +111,8 @@ If you are in the right place, you'll see `launch_app.sh` appear in the list
   - Quit Firefox
 
   - In the terminal, press _ctrl+C_ to quit the app
+  
+  - Move back the file corresponfding to the segments you have already heard (list_a, b or c) from fineDi/static to fineDi
 
 - __!!! Save your progress on the git repository - this MUST be done before you leave !!!__
 
