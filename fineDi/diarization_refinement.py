@@ -62,6 +62,7 @@ global dict_path
 dict_path = os.path.join(app.root_path, 'static', 'info_dict.txt')
 global summary_path
 summary_path = os.path.join(app.root_path, 'static', 'summary.txt')
+global path_seen_list
 global cut_length
 cut_length = 500
 global init_time
@@ -185,6 +186,7 @@ def create_segments(task):
     else:
         global dict_path
         global summary_path
+        global path_seen_list
 
         try:
             with open(dict_path,"rb") as reading_file:
@@ -200,6 +202,12 @@ def create_segments(task):
         except Exception: # if file does not exist, create it
             print("Creating summary dictionary")
             sum_dict = create_summary_txt(media_path, summary_path)
+
+        for i in os.listdir(os.path.join(app.root_path, 'static')):
+            if "list_" in i:
+                print(i)
+                path_seen_list = os.path.join(app.root_path, 'static',i)
+                seen_list = cPickle.load(open(os.path.join(app.root_path, 'static',i), "rb"))
 
         # if 500ms (or other length) labeling
         if ("_c" in task):
@@ -219,7 +227,7 @@ def create_segments(task):
             temp_wav_list = get_wav_list(media_path+'/cutdir/full/')
             wav_list = []
             for w in temp_wav_list:
-                if sum_dict[w][1]<25: #at each iteration, add 10 + answer (-1 if not child, +1 if child); <25 => one child opinion missing
+                if sum_dict[w][1]<25 and w not in seen_list: #at each iteration, add 10 + answer (-1 if not child, +1 if child); <25 => one child opinion missing
                     wav_list.append(w)
             wav_list = random.sample(wav_list, min(max_trials, len(wav_list)))
         else:
@@ -377,6 +385,7 @@ def treat_all_wavs(wav_name='test1.wav'):
                 # print(correction)
                 global dict_path
                 global summary_path
+                global path_seen_list
                 # TODO update following as sth like
                     # info_sum_update(dict_path, sum_path, task, wav_name, correction[0], choice_duration)"
                 # open dict (no matter the task)
@@ -386,6 +395,8 @@ def treat_all_wavs(wav_name='test1.wav'):
                 sum_path = os.path.join(app.root_path, 'static', 'summary.txt')
                 with open(sum_path, 'rb') as reading_file:
                     sum_dict = cPickle.load(reading_file)
+                with open(path_seen_list, 'rb') as reading_file:
+                    seen_list = cPickle.load(reading_file)
 
                 if ("_c" in task):
                     info_dict[(get_wav_index(wav_name), 'cut', choices2task["wholecut_c"][correction[0]])] += 1
@@ -405,6 +416,7 @@ def treat_all_wavs(wav_name='test1.wav'):
                 else :
                     info_dict[(get_wav_index(wav_name), 'whole', 'is_child')] += 10+int(correction[0])
                     sum_dict[wav_name][1] += 10+int(correction[0])
+                    seen_list.append(wav_name)
                     print((get_wav_index(wav_name), 'whole', 'is_child'), info_dict[(get_wav_index(wav_name), 'whole', 'is_child')])
 
                 # write changes in dict no matter the task
@@ -412,6 +424,8 @@ def treat_all_wavs(wav_name='test1.wav'):
                     cPickle.dump(info_dict, writing_file)
                 with open(sum_path, "wb") as writing_file:
                     cPickle.dump(sum_dict, writing_file)
+                with open(path_seen_list, "wb") as writing_file:
+                    cPickle.dump(seen_list, writing_file)
 
                 # TODO end of dictionaries updates
 
