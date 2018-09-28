@@ -234,7 +234,7 @@ def create_segments(task):
             temp_wav_list = get_wav_list(media_path+'/cutdir/full/')
             wav_list = []
             for w in temp_wav_list:
-                if (sum_dict[w][1]==33 and sum_dict[w][0]<requested_answers) :
+                if (sum_dict[w][1]>=31 and sum_dict[w][0]<requested_answers) :
                     print("val sum dict : ", sum_dict[w][0]) # 33 = 3 favorable opinions; if some data is missing (eg a wav having been heard fewer times)
                     wav_list.append(w)
             wav_list = random.sample(wav_list, min(max_trials, len(wav_list))) # sample either defined nb of wav or left wav
@@ -272,7 +272,7 @@ def treat_all_wavs(wav_name='test1.wav'):
     ## TODO update time
 
     global init_time
-
+    text = ""
 
     task = read_task()
 
@@ -327,6 +327,7 @@ def treat_all_wavs(wav_name='test1.wav'):
         display_spkr = "key child"
         speaker = None
     else:
+        text = instructions[task]
         (original_wav, wav_len,
         on_off, label) = get_infos_from_wavname_comparison(wav_name)
         display_spkr = "key child"
@@ -425,6 +426,7 @@ def treat_all_wavs(wav_name='test1.wav'):
                 with open(sum_path, "wb") as writing_file:
                     cPickle.dump(sum_dict, writing_file)
                 with open(path_seen_list, "wb") as writing_file:
+                    print("seen: ", len(seen_list))
                     cPickle.dump(seen_list, writing_file)
 
                 # TODO end of dictionaries updates
@@ -458,7 +460,7 @@ def treat_all_wavs(wav_name='test1.wav'):
     return render_template('show_entries.html', entries=entries.keys(),
                            wav=wav_name, dir=directory, next_wav=next_wav, prev_wav=prev_wav,
                            progress=progress, descriptors=descriptors,
-                           lock=lock, speaker=speaker, noChoice=noChoice)
+                           lock=lock, speaker=speaker, noChoice=noChoice, text=text)
 
 
 @app.route('/success')
