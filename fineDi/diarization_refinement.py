@@ -227,7 +227,7 @@ def create_segments(task):
             temp_wav_list = get_wav_list(media_path+'/cutdir/full/')
             wav_list = []
             for w in temp_wav_list:
-                if sum_dict[w][1]<25 and w not in seen_list: #at each iteration, add 10 + answer (-1 if not child, +1 if child); <25 => one child opinion missing
+                if w not in seen_list: #at each iteration, add 10 + answer (-1 if not child, +1 if child); <25 => one child opinion missing
                     wav_list.append(w)
             wav_list = random.sample(wav_list, min(max_trials, len(wav_list)))
         else:
@@ -415,7 +415,7 @@ def treat_all_wavs(wav_name='test1.wav'):
                         info_dict[(get_wav_index(wav_name), 'whole', 'time')] = info_dict[(get_wav_index(wav_name), 'whole', 'time')] + choice_duration
                     sum_dict[wav_name][0] += 1
                 else :
-                    info_dict[(get_wav_index(wav_name), 'whole', 'is_child')] += 10+int(correction[0])
+                    #info_dict[(get_wav_index(wav_name), 'whole', 'is_child')] += 10+int(correction[0])
                     sum_dict[wav_name][1] += 10+int(correction[0])
                     seen_list.append(wav_name)
                     print((get_wav_index(wav_name), 'whole', 'is_child'), info_dict[(get_wav_index(wav_name), 'whole', 'is_child')])

@@ -25,16 +25,10 @@ mean(data_is_child$length)
 
 Process repeated on 1800 clips, 900 in English and 900 in Tsimane. As the experiment is not over, not all clips have been scored the same number of times:
 
-```{r seen}
-seen <- matrix(c(0,1,2,3, 237, 450, 488, 625), ncol=4, byrow = TRUE)
-colnames(seen) <- c("","","", "")
-rownames(seen) <- c("N", "Number of clips scored by N persons")
-seen
-```
 
 ## Histogram of segment length by language
 
-The clips were chosen among CHN segments longer than 500ms.
+Due to Lena specs, clips are 600ms long or longer
 
 ```{r length_by_language}
 ggplot(data=data_is_child, aes(data_is_child$length)) +
@@ -95,7 +89,7 @@ The #yes-agreement is the number of times a segment was labeled as key child as 
 %yes-agreement is #yes-agreement divided by the number of segments labeled as key child by at least one person (reverse for %no-agreement). %agreement is #yes-agreement+#no-agreement divided by the total number of segments.
 
 
-```{r agreement_res, echo=FALSE}
+```{r agreement_res, echo=FALSE, eval=FALSE}
 res <- matrix(c(overall_agreement, agreeing_no+agreeing_yes, yes_agreement, agreeing_yes, no_agreement, agreeing_no, eng_agreement, eng_agreeing_no+eng_agreeing_yes, eng_agreeing_yes/eng_has_yes, eng_agreeing_yes, eng_agreeing_no/eng_has_no, eng_agreeing_no, tsi_agreement, tsi_agreeing_no+tsi_agreeing_yes, tsi_agreeing_yes/tsi_has_yes, tsi_agreeing_yes,  tsi_agreeing_no/tsi_has_no, tsi_agreeing_no),ncol=6,byrow=TRUE)
 
 colnames(res) <- c(" %Agreement", " #Agreement", " %Yes-agreement", " #Yes-agreement", " %No-agreement", " #No-agreement")
@@ -127,26 +121,30 @@ is_no <- nrow(data_is_child %>% filter(is_not_child>is_child))
 overall_agreement <- (agreeing_no+agreeing_yes)/total_seg
 
 ## yes consensus / considered as yes
-yes_agreement <- agreeing_yes / has_yes
+yes_agreement <- agreeing_yes / is_yes
 
 ## no consensus / considered as no
-no_agreement <- agreeing_no / has_no
+no_agreement <- agreeing_no / is_no
 
 eng <- eng %>% filter(is_child+is_not_child > 1)
 eng_agreeing_yes <- nrow(eng %>% filter(is_not_child==0.0 & is_child!=0.0))
 eng_has_yes <- nrow(eng %>% filter(is_child!=0.0))
+eng_is_yes <- nrow(eng %>% filter(is_child>is_not_child))
 eng_agreeing_no <- nrow(eng %>% filter(is_child==0.0 & is_not_child!=0.0))
 eng_has_no <- nrow(eng %>% filter(is_not_child!=0.0))
+eng_is_no <- nrow(eng %>% filter(is_not_child>is_child))
 eng_agreement <- (eng_agreeing_no+eng_agreeing_yes)/nrow(eng)
 
 tsi <- tsi %>% filter(is_child+is_not_child > 1)
 tsi_agreeing_yes <- nrow(tsi %>% filter(is_not_child==0.0 & is_child!=0.0))
 tsi_has_yes <- nrow(tsi %>% filter(is_child!=0.0))
+tsi_is_yes <- nrow(tsi %>% filter(is_child>is_not_child))
 tsi_agreeing_no <- nrow(tsi %>% filter(is_child==0.0 & is_not_child!=0.0))
 tsi_has_no <- nrow(tsi %>% filter(is_not_child!=0.0))
+tsi_is_no <- nrow(tsi %>% filter(is_not_child>is_child))
 tsi_agreement <- (tsi_agreeing_no+tsi_agreeing_yes)/nrow(tsi)
 
-res <- matrix(c(overall_agreement, agreeing_no+agreeing_yes, yes_agreement, agreeing_yes, no_agreement, agreeing_no, eng_agreement, eng_agreeing_no+eng_agreeing_yes, eng_agreeing_yes/eng_has_yes, eng_agreeing_yes, eng_agreeing_no/eng_has_no, eng_agreeing_no, tsi_agreement, tsi_agreeing_no+tsi_agreeing_yes, tsi_agreeing_yes/tsi_has_yes, tsi_agreeing_yes,  tsi_agreeing_no/tsi_has_no, tsi_agreeing_no),ncol=6,byrow=TRUE)
+res <- matrix(c(overall_agreement, agreeing_no+agreeing_yes, yes_agreement, agreeing_yes, no_agreement, agreeing_no, eng_agreement, eng_agreeing_no+eng_agreeing_yes, eng_agreeing_yes/eng_is_yes, eng_agreeing_yes, eng_agreeing_no/eng_is_no, eng_agreeing_no, tsi_agreement, tsi_agreeing_no+tsi_agreeing_yes, tsi_agreeing_yes/tsi_is_yes, tsi_agreeing_yes,  tsi_agreeing_no/tsi_is_no, tsi_agreeing_no),ncol=6,byrow=TRUE)
 
 colnames(res) <- c(" %Agreement", " #Agreement", " %Yes-agreement", " #Yes-agreement", " %No-agreement", " #No-agreement")
 rownames(res) <- c("Overall", "English", "Tsimane")
